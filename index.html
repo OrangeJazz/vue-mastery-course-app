@@ -16,14 +16,15 @@
         <div class="product-container">
           <div class="product-image">
             <!-- <img v-bind:src="image" /> -->
-            <img :src="image" />
-            <a :href="url">Lesson 3</a>
+            <!-- <img :src="image" :class="[!isStock ? 'out-of-stock-img' : '']" /> -->
+            <img :src="image" :class="{'out-of-stock-img' : !isStock}" />
+            <!-- <a :href="url">Lesson 3</a> -->
           </div>
           <div class="product-info">
             <h1>{{ product }}</h1>
-            <!-- <p v-show="inStock">In Stock</p> -->
-            <p v-if="inventory > 10">In Stock</p>
-            <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out</p>
+            <p v-show="inStock">In Stock</p>
+            <!-- <p v-if="inventory > 10">In Stock</p> -->
+            <!-- <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out</p> -->
             <!-- <p v-if="inStock">In Stock</p> -->
             <p v-else>Out of Stock</p>
 
@@ -31,19 +32,26 @@
               <li v-for="detail in details">{{ detail }}</li>
             </ul>
 
-            <ul>
+            <!-- <ul>
               <li v-for="size in sizes">{{ size }}</li>
-            </ul>
+            </ul> -->
 
             <div
               v-for="variant in variants"
               :key="variant.id"
               @mouseover="updateImage(variant.image)"
-            >
-              {{ variant.color }}
-            </div>
+              class="color-circle"
+              :style="{backgroundColor: variant.color}"
+            ></div>
             <!-- <button class="button" v-on:click="addToCart">Add to Cart</button> -->
-            <button class="button" @click="addToCart">Add to Cart</button>
+            <button
+              class="button"
+              @click="addToCart"
+              :class="{disabledButton: !inStock}"
+              :disabled="!inStock"
+            >
+              Add to Cart
+            </button>
             <button class="button" @click="deleteFromCart">Delete</button>
           </div>
         </div>
