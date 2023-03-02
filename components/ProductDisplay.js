@@ -56,6 +56,8 @@ app.component("product-display", {
           </div>
         </div>
       </div>
+      <review-list v-if="reviews.length" :reviews="reviews"></review-list>
+      <review-form @review-submited="addReview"></review-form>
     `,
 
   data: function () {
@@ -85,6 +87,7 @@ app.component("product-display", {
           quantity: 0,
         },
       ],
+      reviews: [],
     };
   },
 
@@ -98,6 +101,10 @@ app.component("product-display", {
 
     updateVariant(index) {
       this.selectedVariant = index;
+    },
+
+    addReview(review) {
+      this.reviews.push(review);
     },
   },
 
